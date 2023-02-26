@@ -3,13 +3,13 @@ const loadPhonesData = async(searchText) => {
     const res = await fetch(url);
     const data = await res.json();
     displayPhones(data);
+    displayNoFoundMessage(data.data);
 }
 
 const displayPhones = (data) => {
     const phoneContainer = document.getElementById('card-container');
     phoneContainer.innerText = '';
     for(const phones of data.data) {
-        console.log(phones);
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
         phoneDiv.innerHTML = `
@@ -33,4 +33,12 @@ submitBtn.addEventListener('click' , () => {
     loadPhonesData(searchText);
 })
 
-loadPhonesData();
+const displayNoFoundMessage = (phones) => {
+    const noFoundContainer = document.getElementById('noFoundMessage');
+    if(phones.length === 0) {
+        noFoundContainer.classList.remove('d-none');
+    } else {
+        noFoundContainer.classList.add('d-none');
+    }
+}
+
